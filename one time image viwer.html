@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One-Time Image Viewer</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    img {
+      max-width: 90%;
+      border: 5px solid #444;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00f;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer">
+    <h2>Click to view the image</h2>
+    <button onclick="showImage()">View Image</button>
+  </div>
+
+  <script>
+    function showImage() {
+      const alreadyViewed = sessionStorage.getItem("viewed");
+
+      if (alreadyViewed) {
+        document.body.innerHTML = "<h2>This image has expired. 🔒</h2>";
+      } else {
+        sessionStorage.setItem("viewed", "true");
+        document.getElementById("viewer").innerHTML = `
+          <h2>Image will disappear in 10 seconds</h2>
+          <img src="YOUR_IMAGE_URL_HERE" alt="One-time image" />
+        `;
+        setTimeout(() => {
+          document.body.innerHTML = "<h2>This image has expired. 🔒</h2>";
+        }, 10000); // 10 seconds
+      }
+    }
+  </script>
+</body>
+</html>
